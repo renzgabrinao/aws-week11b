@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from 'axios';
 
 export default function Message({msg, currentChat, setMessages}) {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
   const [updateMessage, setUpdateMessage] = useState("");
   const [form, setForm] = useState(false);
 

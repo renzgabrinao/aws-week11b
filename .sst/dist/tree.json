@@ -1,0 +1,3921 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "renzgabrinao-week11-API": {
+        "id": "renzgabrinao-week11-API",
+        "path": "renzgabrinao-week11-API",
+        "children": {
+          "CustomResourceHandler": {
+            "id": "CustomResourceHandler",
+            "path": "renzgabrinao-week11-API/CustomResourceHandler",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "renzgabrinao-week11-API/CustomResourceHandler/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "renzgabrinao-week11-API/CustomResourceHandler/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/CustomResourceHandler/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ],
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.62.2"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "renzgabrinao-week11-API/CustomResourceHandler/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "renzgabrinao-week11-API/CustomResourceHandler/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "renzgabrinao-week11-API/CustomResourceHandler/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.62.2"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "renzgabrinao-week11-API/CustomResourceHandler/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                      "s3Key": "54df1cbf9b6f03da75675ea2bb98cd4392095411be06d0cb0a5dc3bf4bd17168.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "CustomResourceHandlerServiceRole41AEC181",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "index.handler",
+                    "memorySize": 1024,
+                    "runtime": "nodejs16.x",
+                    "tags": [
+                      {
+                        "key": "sst:app",
+                        "value": "week11"
+                      },
+                      {
+                        "key": "sst:stage",
+                        "value": "renzgabrinao"
+                      }
+                    ],
+                    "timeout": 900
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.62.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.62.2"
+            }
+          },
+          "Auth": {
+            "id": "Auth",
+            "path": "renzgabrinao-week11-API/Auth",
+            "children": {
+              "UserPool": {
+                "id": "UserPool",
+                "path": "renzgabrinao-week11-API/Auth/UserPool",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/Auth/UserPool/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Cognito::UserPool",
+                      "aws:cdk:cloudformation:props": {
+                        "accountRecoverySetting": {
+                          "recoveryMechanisms": [
+                            {
+                              "name": "verified_phone_number",
+                              "priority": 1
+                            },
+                            {
+                              "name": "verified_email",
+                              "priority": 2
+                            }
+                          ]
+                        },
+                        "adminCreateUserConfig": {
+                          "allowAdminCreateUserOnly": false
+                        },
+                        "aliasAttributes": [
+                          "email"
+                        ],
+                        "autoVerifiedAttributes": [
+                          "email"
+                        ],
+                        "emailVerificationMessage": "The verification code to your new account is {####}",
+                        "emailVerificationSubject": "Verify your new account",
+                        "smsVerificationMessage": "The verification code to your new account is {####}",
+                        "usernameConfiguration": {
+                          "caseSensitive": false
+                        },
+                        "userPoolName": "renzgabrinao-week11-Auth",
+                        "userPoolTags": {
+                          "sst:app": "week11",
+                          "sst:stage": "renzgabrinao"
+                        },
+                        "verificationMessageTemplate": {
+                          "defaultEmailOption": "CONFIRM_WITH_CODE",
+                          "emailMessage": "The verification code to your new account is {####}",
+                          "emailSubject": "Verify your new account",
+                          "smsMessage": "The verification code to your new account is {####}"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cognito.CfnUserPool",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.UserPool",
+                  "version": "2.62.2"
+                }
+              },
+              "UserPoolClient": {
+                "id": "UserPoolClient",
+                "path": "renzgabrinao-week11-API/Auth/UserPoolClient",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/Auth/UserPoolClient/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Cognito::UserPoolClient",
+                      "aws:cdk:cloudformation:props": {
+                        "userPoolId": {
+                          "Ref": "AuthUserPool8115E87F"
+                        },
+                        "allowedOAuthFlows": [
+                          "implicit",
+                          "code"
+                        ],
+                        "allowedOAuthFlowsUserPoolClient": true,
+                        "allowedOAuthScopes": [
+                          "profile",
+                          "phone",
+                          "email",
+                          "openid",
+                          "aws.cognito.signin.user.admin"
+                        ],
+                        "callbackUrLs": [
+                          "https://example.com"
+                        ],
+                        "supportedIdentityProviders": [
+                          "COGNITO"
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cognito.CfnUserPoolClient",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.UserPoolClient",
+                  "version": "2.62.2"
+                }
+              },
+              "IdentityPool": {
+                "id": "IdentityPool",
+                "path": "renzgabrinao-week11-API/Auth/IdentityPool",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Cognito::IdentityPool",
+                  "aws:cdk:cloudformation:props": {
+                    "allowUnauthenticatedIdentities": true,
+                    "cognitoIdentityProviders": [
+                      {
+                        "providerName": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "cognito-idp.us-east-2.",
+                              {
+                                "Ref": "AWS::URLSuffix"
+                              },
+                              "/",
+                              {
+                                "Ref": "AuthUserPool8115E87F"
+                              }
+                            ]
+                          ]
+                        },
+                        "clientId": {
+                          "Ref": "AuthUserPoolClient0AA456E4"
+                        }
+                      }
+                    ],
+                    "identityPoolName": "renzgabrinao-week11-Auth",
+                    "openIdConnectProviderArns": [],
+                    "supportedLoginProviders": {}
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.CfnIdentityPool",
+                  "version": "2.62.2"
+                }
+              },
+              "IdentityPoolAuthRole": {
+                "id": "IdentityPoolAuthRole",
+                "path": "renzgabrinao-week11-API/Auth/IdentityPoolAuthRole",
+                "children": {
+                  "ImportIdentityPoolAuthRole": {
+                    "id": "ImportIdentityPoolAuthRole",
+                    "path": "renzgabrinao-week11-API/Auth/IdentityPoolAuthRole/ImportIdentityPoolAuthRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/Auth/IdentityPoolAuthRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRoleWithWebIdentity",
+                              "Condition": {
+                                "StringEquals": {
+                                  "cognito-identity.amazonaws.com:aud": {
+                                    "Ref": "AuthIdentityPool12DFB5E1"
+                                  }
+                                },
+                                "ForAnyValue:StringLike": {
+                                  "cognito-identity.amazonaws.com:amr": "authenticated"
+                                }
+                              },
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Federated": "cognito-identity.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "renzgabrinao-week11-API/Auth/IdentityPoolAuthRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/Auth/IdentityPoolAuthRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "mobileanalytics:PutEvents",
+                                    "cognito-sync:*",
+                                    "cognito-identity:*"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                },
+                                {
+                                  "Action": "execute-api:Invoke",
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":execute-api:us-east-2:685970848883:",
+                                        {
+                                          "Ref": "apiApiC3C473D0"
+                                        },
+                                        "/*"
+                                      ]
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "AuthIdentityPoolAuthRoleDefaultPolicy32D17CAC",
+                            "roles": [
+                              {
+                                "Ref": "AuthIdentityPoolAuthRoleD14DA003"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.62.2"
+                }
+              },
+              "IdentityPoolUnauthRole": {
+                "id": "IdentityPoolUnauthRole",
+                "path": "renzgabrinao-week11-API/Auth/IdentityPoolUnauthRole",
+                "children": {
+                  "ImportIdentityPoolUnauthRole": {
+                    "id": "ImportIdentityPoolUnauthRole",
+                    "path": "renzgabrinao-week11-API/Auth/IdentityPoolUnauthRole/ImportIdentityPoolUnauthRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/Auth/IdentityPoolUnauthRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRoleWithWebIdentity",
+                              "Condition": {
+                                "StringEquals": {
+                                  "cognito-identity.amazonaws.com:aud": {
+                                    "Ref": "AuthIdentityPool12DFB5E1"
+                                  }
+                                },
+                                "ForAnyValue:StringLike": {
+                                  "cognito-identity.amazonaws.com:amr": "unauthenticated"
+                                }
+                              },
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Federated": "cognito-identity.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "renzgabrinao-week11-API/Auth/IdentityPoolUnauthRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/Auth/IdentityPoolUnauthRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "mobileanalytics:PutEvents",
+                                    "cognito-sync:*"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "AuthIdentityPoolUnauthRoleDefaultPolicy0417F857",
+                            "roles": [
+                              {
+                                "Ref": "AuthIdentityPoolUnauthRoleA8DE48F3"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.62.2"
+                }
+              },
+              "IdentityPoolRoleAttachment": {
+                "id": "IdentityPoolRoleAttachment",
+                "path": "renzgabrinao-week11-API/Auth/IdentityPoolRoleAttachment",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Cognito::IdentityPoolRoleAttachment",
+                  "aws:cdk:cloudformation:props": {
+                    "identityPoolId": {
+                      "Ref": "AuthIdentityPool12DFB5E1"
+                    },
+                    "roles": {
+                      "authenticated": {
+                        "Fn::GetAtt": [
+                          "AuthIdentityPoolAuthRoleD14DA003",
+                          "Arn"
+                        ]
+                      },
+                      "unauthenticated": {
+                        "Fn::GetAtt": [
+                          "AuthIdentityPoolUnauthRoleA8DE48F3",
+                          "Arn"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.CfnIdentityPoolRoleAttachment",
+                  "version": "2.62.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.156"
+            }
+          },
+          "api": {
+            "id": "api",
+            "path": "renzgabrinao-week11-API/api",
+            "children": {
+              "Api": {
+                "id": "Api",
+                "path": "renzgabrinao-week11-API/api/Api",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Api/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Api",
+                      "aws:cdk:cloudformation:props": {
+                        "corsConfiguration": {
+                          "allowCredentials": false,
+                          "allowHeaders": [
+                            "*"
+                          ],
+                          "allowMethods": [
+                            "*"
+                          ],
+                          "allowOrigins": [
+                            "*"
+                          ]
+                        },
+                        "name": "renzgabrinao-week11-api",
+                        "protocolType": "HTTP",
+                        "tags": {
+                          "sst:app": "week11",
+                          "sst:stage": "renzgabrinao"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnApi",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "DefaultStage": {
+                    "id": "DefaultStage",
+                    "path": "renzgabrinao-week11-API/api/Api/DefaultStage",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Api/DefaultStage/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Stage",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "stageName": "$default",
+                            "accessLogSettings": {
+                              "format": "{\"requestTime\":\"$context.requestTime\",\"requestId\":\"$context.requestId\",\"httpMethod\":\"$context.httpMethod\",\"path\":\"$context.path\",\"routeKey\":\"$context.routeKey\",\"status\":$context.status,\"responseLatency\":$context.responseLatency,\"integrationRequestId\":\"$context.integration.requestId\",\"integrationStatus\":\"$context.integration.status\",\"integrationLatency\":\"$context.integration.latency\",\"integrationServiceStatus\":\"$context.integration.integrationStatus\",\"ip\":\"$context.identity.sourceIp\",\"userAgent\":\"$context.identity.userAgent\"}",
+                              "destinationArn": {
+                                "Fn::GetAtt": [
+                                  "apiLogGroup924E5B7A",
+                                  "Arn"
+                                ]
+                              }
+                            },
+                            "autoDeploy": true,
+                            "tags": {
+                              "sst:app": "week11",
+                              "sst:stage": "renzgabrinao"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnStage",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpStage",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  },
+                  "jwt": {
+                    "id": "jwt",
+                    "path": "renzgabrinao-week11-API/api/Api/jwt",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Api/jwt/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Authorizer",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "authorizerType": "JWT",
+                            "name": "jwt",
+                            "identitySource": [
+                              "$request.header.Authorization"
+                            ],
+                            "jwtConfiguration": {
+                              "audience": [
+                                {
+                                  "Ref": "AuthUserPoolClient0AA456E4"
+                                }
+                              ],
+                              "issuer": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "https://cognito-idp.us-east-2.amazonaws.com/",
+                                    {
+                                      "Ref": "AuthUserPool8115E87F"
+                                    }
+                                  ]
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnAuthorizer",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpAuthorizer",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpApi",
+                  "version": "2.62.2-alpha.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "renzgabrinao-week11-API/api/LogGroup",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/LogGroup/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "logGroupName": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "/aws/vendedlogs/apis/renzgabrinao-week11-api-",
+                              {
+                                "Ref": "apiApiC3C473D0"
+                              },
+                              "/default"
+                            ]
+                          ]
+                        },
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+                  "version": "2.62.2"
+                }
+              },
+              "Api-api-Authorizer-jwt-UserPool": {
+                "id": "Api-api-Authorizer-jwt-UserPool",
+                "path": "renzgabrinao-week11-API/api/Api-api-Authorizer-jwt-UserPool",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.62.2"
+                }
+              },
+              "Api-api-Authorizer-jwt-UserPoolClient-0": {
+                "id": "Api-api-Authorizer-jwt-UserPoolClient-0",
+                "path": "renzgabrinao-week11-API/api/Api-api-Authorizer-jwt-UserPoolClient-0",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.62.2"
+                }
+              },
+              "Lambda_GET_--chats": {
+                "id": "Lambda_GET_--chats",
+                "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "week11"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "renzgabrinao"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "iot:*",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "apiLambdaGETchatsServiceRoleDefaultPolicy9BF29F90",
+                                "roles": [
+                                  {
+                                    "Ref": "apiLambdaGETchatsServiceRoleAA72D938"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.62.2"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                          "s3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "apiLambdaGETchatsServiceRoleAA72D938",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+                            "SST_FUNCTION_ID": "c8b0012473b5e1963449e1b420da4cb8c3ecdf81bd",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "week11",
+                            "SST_STAGE": "renzgabrinao",
+                            "SST_SSM_PREFIX": "/sst/week11/renzgabrinao/",
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "bridge.handler",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--chats/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "apiLambdaGETchats4742294E"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.62.2"
+                }
+              },
+              "Route_GET_--chats": {
+                "id": "Route_GET_--chats",
+                "path": "renzgabrinao-week11-API/api/Route_GET_--chats",
+                "children": {
+                  "Integration_GET_--chats": {
+                    "id": "Integration_GET_--chats",
+                    "path": "renzgabrinao-week11-API/api/Route_GET_--chats/Integration_GET_--chats",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Route_GET_--chats/Integration_GET_--chats/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "apiLambdaGETchats4742294E",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  },
+                  "Integration_GET_--chats-Permission": {
+                    "id": "Integration_GET_--chats-Permission",
+                    "path": "renzgabrinao-week11-API/api/Route_GET_--chats/Integration_GET_--chats-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "apiLambdaGETchats4742294E",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:us-east-2:685970848883:",
+                              {
+                                "Ref": "apiApiC3C473D0"
+                              },
+                              "/*/*/chats"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Route_GET_--chats/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "apiApiC3C473D0"
+                        },
+                        "routeKey": "GET /chats",
+                        "authorizationType": "NONE",
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "apiRouteGETchatsIntegrationGETchats628E6E31"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.62.2-alpha.0"
+                }
+              },
+              "Lambda_POST_--chats": {
+                "id": "Lambda_POST_--chats",
+                "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "week11"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "renzgabrinao"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "iot:*",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "apiLambdaPOSTchatsServiceRoleDefaultPolicy6A464425",
+                                "roles": [
+                                  {
+                                    "Ref": "apiLambdaPOSTchatsServiceRole517F2ED9"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.62.2"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                          "s3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "apiLambdaPOSTchatsServiceRole517F2ED9",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+                            "SST_FUNCTION_ID": "c88c7070dc7b4a866f41262bfb53079ce88ce4d6cf",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "week11",
+                            "SST_STAGE": "renzgabrinao",
+                            "SST_SSM_PREFIX": "/sst/week11/renzgabrinao/",
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "bridge.handler",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--chats/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "apiLambdaPOSTchatsC68D5486"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.62.2"
+                }
+              },
+              "Route_POST_--chats": {
+                "id": "Route_POST_--chats",
+                "path": "renzgabrinao-week11-API/api/Route_POST_--chats",
+                "children": {
+                  "Integration_POST_--chats": {
+                    "id": "Integration_POST_--chats",
+                    "path": "renzgabrinao-week11-API/api/Route_POST_--chats/Integration_POST_--chats",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Route_POST_--chats/Integration_POST_--chats/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "apiLambdaPOSTchatsC68D5486",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  },
+                  "Integration_POST_--chats-Permission": {
+                    "id": "Integration_POST_--chats-Permission",
+                    "path": "renzgabrinao-week11-API/api/Route_POST_--chats/Integration_POST_--chats-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "apiLambdaPOSTchatsC68D5486",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:us-east-2:685970848883:",
+                              {
+                                "Ref": "apiApiC3C473D0"
+                              },
+                              "/*/*/chats"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Route_POST_--chats/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "apiApiC3C473D0"
+                        },
+                        "routeKey": "POST /chats",
+                        "authorizationType": "JWT",
+                        "authorizerId": {
+                          "Ref": "apiApijwt0C08B991"
+                        },
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "apiRoutePOSTchatsIntegrationPOSTchats80E9CB0E"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.62.2-alpha.0"
+                }
+              },
+              "Lambda_DELETE_--chats--{chatId}": {
+                "id": "Lambda_DELETE_--chats--{chatId}",
+                "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "week11"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "renzgabrinao"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "iot:*",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "apiLambdaDELETEchatschatIdServiceRoleDefaultPolicy70DD136F",
+                                "roles": [
+                                  {
+                                    "Ref": "apiLambdaDELETEchatschatIdServiceRole9EBC5C28"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.62.2"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                          "s3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "apiLambdaDELETEchatschatIdServiceRole9EBC5C28",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+                            "SST_FUNCTION_ID": "c8088ded5d67afc470f6ff68751913d661033c8fe0",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "week11",
+                            "SST_STAGE": "renzgabrinao",
+                            "SST_SSM_PREFIX": "/sst/week11/renzgabrinao/",
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "bridge.handler",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--chats--{chatId}/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "apiLambdaDELETEchatschatId236219F7"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.62.2"
+                }
+              },
+              "Route_DELETE_--chats--{chatId}": {
+                "id": "Route_DELETE_--chats--{chatId}",
+                "path": "renzgabrinao-week11-API/api/Route_DELETE_--chats--{chatId}",
+                "children": {
+                  "Integration_DELETE_--chats--{chatId}": {
+                    "id": "Integration_DELETE_--chats--{chatId}",
+                    "path": "renzgabrinao-week11-API/api/Route_DELETE_--chats--{chatId}/Integration_DELETE_--chats--{chatId}",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Route_DELETE_--chats--{chatId}/Integration_DELETE_--chats--{chatId}/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "apiLambdaDELETEchatschatId236219F7",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  },
+                  "Integration_DELETE_--chats--{chatId}-Permission": {
+                    "id": "Integration_DELETE_--chats--{chatId}-Permission",
+                    "path": "renzgabrinao-week11-API/api/Route_DELETE_--chats--{chatId}/Integration_DELETE_--chats--{chatId}-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "apiLambdaDELETEchatschatId236219F7",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:us-east-2:685970848883:",
+                              {
+                                "Ref": "apiApiC3C473D0"
+                              },
+                              "/*/*/chats/{chatId}"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Route_DELETE_--chats--{chatId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "apiApiC3C473D0"
+                        },
+                        "routeKey": "DELETE /chats/{chatId}",
+                        "authorizationType": "JWT",
+                        "authorizerId": {
+                          "Ref": "apiApijwt0C08B991"
+                        },
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "apiRouteDELETEchatschatIdIntegrationDELETEchatschatId9BFDF073"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.62.2-alpha.0"
+                }
+              },
+              "Lambda_PUT_--chats--{chatId}": {
+                "id": "Lambda_PUT_--chats--{chatId}",
+                "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "week11"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "renzgabrinao"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "iot:*",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "apiLambdaPUTchatschatIdServiceRoleDefaultPolicyB17DE954",
+                                "roles": [
+                                  {
+                                    "Ref": "apiLambdaPUTchatschatIdServiceRole18C245E7"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.62.2"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                          "s3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "apiLambdaPUTchatschatIdServiceRole18C245E7",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+                            "SST_FUNCTION_ID": "c89fac5ce17ba3a6eb9a66bc89ba3d9882cdc79563",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "week11",
+                            "SST_STAGE": "renzgabrinao",
+                            "SST_SSM_PREFIX": "/sst/week11/renzgabrinao/",
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "bridge.handler",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--chats--{chatId}/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "apiLambdaPUTchatschatId6AB044D4"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.62.2"
+                }
+              },
+              "Route_PUT_--chats--{chatId}": {
+                "id": "Route_PUT_--chats--{chatId}",
+                "path": "renzgabrinao-week11-API/api/Route_PUT_--chats--{chatId}",
+                "children": {
+                  "Integration_PUT_--chats--{chatId}": {
+                    "id": "Integration_PUT_--chats--{chatId}",
+                    "path": "renzgabrinao-week11-API/api/Route_PUT_--chats--{chatId}/Integration_PUT_--chats--{chatId}",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Route_PUT_--chats--{chatId}/Integration_PUT_--chats--{chatId}/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "apiLambdaPUTchatschatId6AB044D4",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  },
+                  "Integration_PUT_--chats--{chatId}-Permission": {
+                    "id": "Integration_PUT_--chats--{chatId}-Permission",
+                    "path": "renzgabrinao-week11-API/api/Route_PUT_--chats--{chatId}/Integration_PUT_--chats--{chatId}-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "apiLambdaPUTchatschatId6AB044D4",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:us-east-2:685970848883:",
+                              {
+                                "Ref": "apiApiC3C473D0"
+                              },
+                              "/*/*/chats/{chatId}"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Route_PUT_--chats--{chatId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "apiApiC3C473D0"
+                        },
+                        "routeKey": "PUT /chats/{chatId}",
+                        "authorizationType": "JWT",
+                        "authorizerId": {
+                          "Ref": "apiApijwt0C08B991"
+                        },
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "apiRoutePUTchatschatIdIntegrationPUTchatschatId874B7628"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.62.2-alpha.0"
+                }
+              },
+              "Lambda_GET_--messages--{chatId}": {
+                "id": "Lambda_GET_--messages--{chatId}",
+                "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "week11"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "renzgabrinao"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "iot:*",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "apiLambdaGETmessageschatIdServiceRoleDefaultPolicy9DE98704",
+                                "roles": [
+                                  {
+                                    "Ref": "apiLambdaGETmessageschatIdServiceRoleF198A9FB"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.62.2"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                          "s3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "apiLambdaGETmessageschatIdServiceRoleF198A9FB",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+                            "SST_FUNCTION_ID": "c8437d374fd7d8963efd2f042a2b3aa57cb9b24a50",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "week11",
+                            "SST_STAGE": "renzgabrinao",
+                            "SST_SSM_PREFIX": "/sst/week11/renzgabrinao/",
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "bridge.handler",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_GET_--messages--{chatId}/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "apiLambdaGETmessageschatId7A8DDAB6"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.62.2"
+                }
+              },
+              "Route_GET_--messages--{chatId}": {
+                "id": "Route_GET_--messages--{chatId}",
+                "path": "renzgabrinao-week11-API/api/Route_GET_--messages--{chatId}",
+                "children": {
+                  "Integration_GET_--messages--{chatId}": {
+                    "id": "Integration_GET_--messages--{chatId}",
+                    "path": "renzgabrinao-week11-API/api/Route_GET_--messages--{chatId}/Integration_GET_--messages--{chatId}",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Route_GET_--messages--{chatId}/Integration_GET_--messages--{chatId}/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "apiLambdaGETmessageschatId7A8DDAB6",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  },
+                  "Integration_GET_--messages--{chatId}-Permission": {
+                    "id": "Integration_GET_--messages--{chatId}-Permission",
+                    "path": "renzgabrinao-week11-API/api/Route_GET_--messages--{chatId}/Integration_GET_--messages--{chatId}-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "apiLambdaGETmessageschatId7A8DDAB6",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:us-east-2:685970848883:",
+                              {
+                                "Ref": "apiApiC3C473D0"
+                              },
+                              "/*/*/messages/{chatId}"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Route_GET_--messages--{chatId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "apiApiC3C473D0"
+                        },
+                        "routeKey": "GET /messages/{chatId}",
+                        "authorizationType": "NONE",
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "apiRouteGETmessageschatIdIntegrationGETmessageschatIdE745DBD6"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.62.2-alpha.0"
+                }
+              },
+              "Lambda_POST_--messages": {
+                "id": "Lambda_POST_--messages",
+                "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "week11"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "renzgabrinao"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "iot:*",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "apiLambdaPOSTmessagesServiceRoleDefaultPolicy597BE47B",
+                                "roles": [
+                                  {
+                                    "Ref": "apiLambdaPOSTmessagesServiceRole085027C7"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.62.2"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                          "s3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "apiLambdaPOSTmessagesServiceRole085027C7",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+                            "SST_FUNCTION_ID": "c87df342d79443047190f1171aea7faa76e6ebb4dc",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "week11",
+                            "SST_STAGE": "renzgabrinao",
+                            "SST_SSM_PREFIX": "/sst/week11/renzgabrinao/",
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "bridge.handler",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_POST_--messages/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "apiLambdaPOSTmessages6773B633"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.62.2"
+                }
+              },
+              "Route_POST_--messages": {
+                "id": "Route_POST_--messages",
+                "path": "renzgabrinao-week11-API/api/Route_POST_--messages",
+                "children": {
+                  "Integration_POST_--messages": {
+                    "id": "Integration_POST_--messages",
+                    "path": "renzgabrinao-week11-API/api/Route_POST_--messages/Integration_POST_--messages",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Route_POST_--messages/Integration_POST_--messages/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "apiLambdaPOSTmessages6773B633",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  },
+                  "Integration_POST_--messages-Permission": {
+                    "id": "Integration_POST_--messages-Permission",
+                    "path": "renzgabrinao-week11-API/api/Route_POST_--messages/Integration_POST_--messages-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "apiLambdaPOSTmessages6773B633",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:us-east-2:685970848883:",
+                              {
+                                "Ref": "apiApiC3C473D0"
+                              },
+                              "/*/*/messages"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Route_POST_--messages/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "apiApiC3C473D0"
+                        },
+                        "routeKey": "POST /messages",
+                        "authorizationType": "JWT",
+                        "authorizerId": {
+                          "Ref": "apiApijwt0C08B991"
+                        },
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "apiRoutePOSTmessagesIntegrationPOSTmessagesC10DF2DD"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.62.2-alpha.0"
+                }
+              },
+              "Lambda_DELETE_--messages--{chatId}--{messageId}": {
+                "id": "Lambda_DELETE_--messages--{chatId}--{messageId}",
+                "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "week11"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "renzgabrinao"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "iot:*",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "apiLambdaDELETEmessageschatIdmessageIdServiceRoleDefaultPolicyD147EB50",
+                                "roles": [
+                                  {
+                                    "Ref": "apiLambdaDELETEmessageschatIdmessageIdServiceRoleAD48E5F2"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.62.2"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                          "s3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "apiLambdaDELETEmessageschatIdmessageIdServiceRoleAD48E5F2",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+                            "SST_FUNCTION_ID": "c8f63fad09c81e82e48fb8b79d844adebd13d1c813",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "week11",
+                            "SST_STAGE": "renzgabrinao",
+                            "SST_SSM_PREFIX": "/sst/week11/renzgabrinao/",
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "bridge.handler",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "apiLambdaDELETEmessageschatIdmessageIdF27BCB07"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.62.2"
+                }
+              },
+              "Route_DELETE_--messages--{chatId}--{messageId}": {
+                "id": "Route_DELETE_--messages--{chatId}--{messageId}",
+                "path": "renzgabrinao-week11-API/api/Route_DELETE_--messages--{chatId}--{messageId}",
+                "children": {
+                  "Integration_DELETE_--messages--{chatId}--{messageId}": {
+                    "id": "Integration_DELETE_--messages--{chatId}--{messageId}",
+                    "path": "renzgabrinao-week11-API/api/Route_DELETE_--messages--{chatId}--{messageId}/Integration_DELETE_--messages--{chatId}--{messageId}",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Route_DELETE_--messages--{chatId}--{messageId}/Integration_DELETE_--messages--{chatId}--{messageId}/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "apiLambdaDELETEmessageschatIdmessageIdF27BCB07",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  },
+                  "Integration_DELETE_--messages--{chatId}--{messageId}-Permission": {
+                    "id": "Integration_DELETE_--messages--{chatId}--{messageId}-Permission",
+                    "path": "renzgabrinao-week11-API/api/Route_DELETE_--messages--{chatId}--{messageId}/Integration_DELETE_--messages--{chatId}--{messageId}-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "apiLambdaDELETEmessageschatIdmessageIdF27BCB07",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:us-east-2:685970848883:",
+                              {
+                                "Ref": "apiApiC3C473D0"
+                              },
+                              "/*/*/messages/{chatId}/{messageId}"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Route_DELETE_--messages--{chatId}--{messageId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "apiApiC3C473D0"
+                        },
+                        "routeKey": "DELETE /messages/{chatId}/{messageId}",
+                        "authorizationType": "JWT",
+                        "authorizerId": {
+                          "Ref": "apiApijwt0C08B991"
+                        },
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "apiRouteDELETEmessageschatIdmessageIdIntegrationDELETEmessageschatIdmessageIdB2407ECD"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.62.2-alpha.0"
+                }
+              },
+              "Lambda_PUT_--messages--{chatId}--{messageId}": {
+                "id": "Lambda_PUT_--messages--{chatId}--{messageId}",
+                "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "week11"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "renzgabrinao"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "iot:*",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "apiLambdaPUTmessageschatIdmessageIdServiceRoleDefaultPolicy587BC4B8",
+                                "roles": [
+                                  {
+                                    "Ref": "apiLambdaPUTmessageschatIdmessageIdServiceRoleE1A9381D"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.62.2"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.62.2"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                          "s3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "apiLambdaPUTmessageschatIdmessageIdServiceRoleE1A9381D",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+                            "SST_FUNCTION_ID": "c8d9472ede08425cfd28014e19e3a6590c3ae18fa0",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "week11",
+                            "SST_STAGE": "renzgabrinao",
+                            "SST_SSM_PREFIX": "/sst/week11/renzgabrinao/",
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "bridge.handler",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "apiLambdaPUTmessageschatIdmessageId69379E4C"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.62.2"
+                }
+              },
+              "Route_PUT_--messages--{chatId}--{messageId}": {
+                "id": "Route_PUT_--messages--{chatId}--{messageId}",
+                "path": "renzgabrinao-week11-API/api/Route_PUT_--messages--{chatId}--{messageId}",
+                "children": {
+                  "Integration_PUT_--messages--{chatId}--{messageId}": {
+                    "id": "Integration_PUT_--messages--{chatId}--{messageId}",
+                    "path": "renzgabrinao-week11-API/api/Route_PUT_--messages--{chatId}--{messageId}/Integration_PUT_--messages--{chatId}--{messageId}",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "renzgabrinao-week11-API/api/Route_PUT_--messages--{chatId}--{messageId}/Integration_PUT_--messages--{chatId}--{messageId}/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "apiApiC3C473D0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "apiLambdaPUTmessageschatIdmessageId69379E4C",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.62.2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.62.2-alpha.0"
+                    }
+                  },
+                  "Integration_PUT_--messages--{chatId}--{messageId}-Permission": {
+                    "id": "Integration_PUT_--messages--{chatId}--{messageId}-Permission",
+                    "path": "renzgabrinao-week11-API/api/Route_PUT_--messages--{chatId}--{messageId}/Integration_PUT_--messages--{chatId}--{messageId}-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "apiLambdaPUTmessageschatIdmessageId69379E4C",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:us-east-2:685970848883:",
+                              {
+                                "Ref": "apiApiC3C473D0"
+                              },
+                              "/*/*/messages/{chatId}/{messageId}"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Route_PUT_--messages--{chatId}--{messageId}/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "apiApiC3C473D0"
+                        },
+                        "routeKey": "PUT /messages/{chatId}/{messageId}",
+                        "authorizationType": "JWT",
+                        "authorizerId": {
+                          "Ref": "apiApijwt0C08B991"
+                        },
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "apiRoutePUTmessageschatIdmessageIdIntegrationPUTmessageschatIdmessageIdB0ADD0B8"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.62.2-alpha.0"
+                }
+              },
+              "Parameter_url": {
+                "id": "Parameter_url",
+                "path": "renzgabrinao-week11-API/api/Parameter_url",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-API/api/Parameter_url/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                      "aws:cdk:cloudformation:props": {
+                        "type": "String",
+                        "value": {
+                          "Fn::GetAtt": [
+                            "apiApiC3C473D0",
+                            "ApiEndpoint"
+                          ]
+                        },
+                        "name": "/sst/week11/renzgabrinao/Api/api/url",
+                        "tags": {
+                          "sst:app": "week11",
+                          "sst:stage": "renzgabrinao"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+                  "version": "2.62.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.156"
+            }
+          },
+          "SSTStackOutputApiEndpoint": {
+            "id": "SSTStackOutputApiEndpoint",
+            "path": "renzgabrinao-week11-API/SSTStackOutputApiEndpoint",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.62.2"
+            }
+          },
+          "SSTStackOutputUserPoolId": {
+            "id": "SSTStackOutputUserPoolId",
+            "path": "renzgabrinao-week11-API/SSTStackOutputUserPoolId",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.62.2"
+            }
+          },
+          "SSTStackOutputIdentityPoolId": {
+            "id": "SSTStackOutputIdentityPoolId",
+            "path": "renzgabrinao-week11-API/SSTStackOutputIdentityPoolId",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.62.2"
+            }
+          },
+          "SSTStackOutputUserPoolClientId": {
+            "id": "SSTStackOutputUserPoolClientId",
+            "path": "renzgabrinao-week11-API/SSTStackOutputUserPoolClientId",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.62.2"
+            }
+          },
+          "SSTStackOutputSSTMetadata": {
+            "id": "SSTStackOutputSSTMetadata",
+            "path": "renzgabrinao-week11-API/SSTStackOutputSSTMetadata",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.62.2"
+            }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "renzgabrinao-week11-API/Exports",
+            "children": {
+              "Output{\"Fn::GetAtt\":[\"apiApiC3C473D0\",\"ApiEndpoint\"]}": {
+                "id": "Output{\"Fn::GetAtt\":[\"apiApiC3C473D0\",\"ApiEndpoint\"]}",
+                "path": "renzgabrinao-week11-API/Exports/Output{\"Fn::GetAtt\":[\"apiApiC3C473D0\",\"ApiEndpoint\"]}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.62.2"
+                }
+              },
+              "Output{\"Ref\":\"AuthUserPool8115E87F\"}": {
+                "id": "Output{\"Ref\":\"AuthUserPool8115E87F\"}",
+                "path": "renzgabrinao-week11-API/Exports/Output{\"Ref\":\"AuthUserPool8115E87F\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.62.2"
+                }
+              },
+              "Output{\"Ref\":\"AuthUserPoolClient0AA456E4\"}": {
+                "id": "Output{\"Ref\":\"AuthUserPoolClient0AA456E4\"}",
+                "path": "renzgabrinao-week11-API/Exports/Output{\"Ref\":\"AuthUserPoolClient0AA456E4\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.62.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.156"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "renzgabrinao-week11-API/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.62.2"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "renzgabrinao-week11-API/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.62.2"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.62.2"
+        }
+      },
+      "renzgabrinao-week11-FrontendStack": {
+        "id": "renzgabrinao-week11-FrontendStack",
+        "path": "renzgabrinao-week11-FrontendStack",
+        "children": {
+          "CustomResourceHandler": {
+            "id": "CustomResourceHandler",
+            "path": "renzgabrinao-week11-FrontendStack/CustomResourceHandler",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "renzgabrinao-week11-FrontendStack/CustomResourceHandler/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "renzgabrinao-week11-FrontendStack/CustomResourceHandler/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-FrontendStack/CustomResourceHandler/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ],
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "week11"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "renzgabrinao"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.62.2"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "renzgabrinao-week11-FrontendStack/CustomResourceHandler/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "renzgabrinao-week11-FrontendStack/CustomResourceHandler/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.62.2"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "renzgabrinao-week11-FrontendStack/CustomResourceHandler/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.62.2"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "renzgabrinao-week11-FrontendStack/CustomResourceHandler/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+                      "s3Key": "c8ddf9c4db08aa14a3dd90bfb0c2af7062d032cb7ab57919fd861840980d84c4.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "CustomResourceHandlerServiceRole41AEC181",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "index.handler",
+                    "memorySize": 1024,
+                    "runtime": "nodejs16.x",
+                    "tags": [
+                      {
+                        "key": "sst:app",
+                        "value": "week11"
+                      },
+                      {
+                        "key": "sst:stage",
+                        "value": "renzgabrinao"
+                      }
+                    ],
+                    "timeout": 900
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.62.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.62.2"
+            }
+          },
+          "ReactSite": {
+            "id": "ReactSite",
+            "path": "renzgabrinao-week11-FrontendStack/ReactSite",
+            "children": {
+              "SstSiteEnv_VITE_APP_API_URL": {
+                "id": "SstSiteEnv_VITE_APP_API_URL",
+                "path": "renzgabrinao-week11-FrontendStack/ReactSite/SstSiteEnv_VITE_APP_API_URL",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.62.2"
+                }
+              },
+              "SstSiteEnv_VITE_APP_REGION": {
+                "id": "SstSiteEnv_VITE_APP_REGION",
+                "path": "renzgabrinao-week11-FrontendStack/ReactSite/SstSiteEnv_VITE_APP_REGION",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.62.2"
+                }
+              },
+              "SstSiteEnv_VITE_APP_USER_POOL_ID": {
+                "id": "SstSiteEnv_VITE_APP_USER_POOL_ID",
+                "path": "renzgabrinao-week11-FrontendStack/ReactSite/SstSiteEnv_VITE_APP_USER_POOL_ID",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.62.2"
+                }
+              },
+              "SstSiteEnv_VITE_APP_USER_POOL_CLIENT_ID": {
+                "id": "SstSiteEnv_VITE_APP_USER_POOL_CLIENT_ID",
+                "path": "renzgabrinao-week11-FrontendStack/ReactSite/SstSiteEnv_VITE_APP_USER_POOL_CLIENT_ID",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.62.2"
+                }
+              },
+              "Parameter_url": {
+                "id": "Parameter_url",
+                "path": "renzgabrinao-week11-FrontendStack/ReactSite/Parameter_url",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "renzgabrinao-week11-FrontendStack/ReactSite/Parameter_url/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                      "aws:cdk:cloudformation:props": {
+                        "type": "String",
+                        "value": "localhost",
+                        "name": "/sst/week11/renzgabrinao/StaticSite/ReactSite/url",
+                        "tags": {
+                          "sst:app": "week11",
+                          "sst:stage": "renzgabrinao"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                      "version": "2.62.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+                  "version": "2.62.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.156"
+            }
+          },
+          "SSTStackOutputSiteUrl": {
+            "id": "SSTStackOutputSiteUrl",
+            "path": "renzgabrinao-week11-FrontendStack/SSTStackOutputSiteUrl",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.62.2"
+            }
+          },
+          "SSTStackOutputSSTMetadata": {
+            "id": "SSTStackOutputSSTMetadata",
+            "path": "renzgabrinao-week11-FrontendStack/SSTStackOutputSSTMetadata",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.62.2"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "renzgabrinao-week11-FrontendStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.62.2"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "renzgabrinao-week11-FrontendStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.62.2"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.62.2"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.156"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.62.2"
+    }
+  }
+}
