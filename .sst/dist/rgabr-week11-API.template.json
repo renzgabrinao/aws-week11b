@@ -1,0 +1,1870 @@
+{
+ "Resources": {
+  "CustomResourceHandlerServiceRole41AEC181": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   }
+  },
+  "CustomResourceHandlerE8FB56BA": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+     "S3Key": "2fae00d07443f34a28275ce0f9fee1792766a1e319f74d49b0ab2651b9acd666.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomResourceHandlerServiceRole41AEC181",
+      "Arn"
+     ]
+    },
+    "Handler": "index.handler",
+    "MemorySize": 1024,
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ],
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "CustomResourceHandlerServiceRole41AEC181"
+   ]
+  },
+  "apiApiC3C473D0": {
+   "Type": "AWS::ApiGatewayV2::Api",
+   "Properties": {
+    "CorsConfiguration": {
+     "AllowCredentials": false,
+     "AllowHeaders": [
+      "*"
+     ],
+     "AllowMethods": [
+      "*"
+     ],
+     "AllowOrigins": [
+      "*"
+     ]
+    },
+    "Name": "rgabr-week11-api",
+    "ProtocolType": "HTTP",
+    "Tags": {
+     "sst:app": "week11",
+     "sst:stage": "rgabr"
+    }
+   }
+  },
+  "apiApiDefaultStageA626ED4D": {
+   "Type": "AWS::ApiGatewayV2::Stage",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "StageName": "$default",
+    "AccessLogSettings": {
+     "DestinationArn": {
+      "Fn::GetAtt": [
+       "apiLogGroup924E5B7A",
+       "Arn"
+      ]
+     },
+     "Format": "{\"requestTime\":\"$context.requestTime\",\"requestId\":\"$context.requestId\",\"httpMethod\":\"$context.httpMethod\",\"path\":\"$context.path\",\"routeKey\":\"$context.routeKey\",\"status\":$context.status,\"responseLatency\":$context.responseLatency,\"integrationRequestId\":\"$context.integration.requestId\",\"integrationStatus\":\"$context.integration.status\",\"integrationLatency\":\"$context.integration.latency\",\"integrationServiceStatus\":\"$context.integration.integrationStatus\",\"ip\":\"$context.identity.sourceIp\",\"userAgent\":\"$context.identity.userAgent\"}"
+    },
+    "AutoDeploy": true,
+    "Tags": {
+     "sst:app": "week11",
+     "sst:stage": "rgabr"
+    }
+   }
+  },
+  "apiLogGroup924E5B7A": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/vendedlogs/apis/rgabr-week11-api-",
+       {
+        "Ref": "apiApiC3C473D0"
+       },
+       "/default"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain"
+  },
+  "apiLambdaGETchatsServiceRoleAA72D938": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   }
+  },
+  "apiLambdaGETchatsServiceRoleDefaultPolicy9BF29F90": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iot:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "apiLambdaGETchatsServiceRoleDefaultPolicy9BF29F90",
+    "Roles": [
+     {
+      "Ref": "apiLambdaGETchatsServiceRoleAA72D938"
+     }
+    ]
+   }
+  },
+  "apiLambdaGETchats4742294E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+     "S3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "apiLambdaGETchatsServiceRoleAA72D938",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+      "SST_FUNCTION_ID": "c8b71a55c361a2361526fdf21eaf2d583f528d89d7",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+      "SST_APP": "week11",
+      "SST_STAGE": "rgabr",
+      "SST_SSM_PREFIX": "/sst/week11/rgabr/",
+      "SST_DEBUG_IS_API_ROUTE": "1"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "bridge.handler",
+    "MemorySize": 1024,
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "apiLambdaGETchatsServiceRoleDefaultPolicy9BF29F90",
+    "apiLambdaGETchatsServiceRoleAA72D938"
+   ]
+  },
+  "apiLambdaGETchatsEventInvokeConfig0141E975": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "apiLambdaGETchats4742294E"
+    },
+    "Qualifier": "$LATEST",
+    "MaximumRetryAttempts": 0
+   }
+  },
+  "apiRouteGETchatsIntegrationGETchats628E6E31": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiLambdaGETchats4742294E",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   }
+  },
+  "apiRouteGETchatsIntegrationGETchatsPermissionDD83C115": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiLambdaGETchats4742294E",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-2:685970848883:",
+       {
+        "Ref": "apiApiC3C473D0"
+       },
+       "/*/*/chats"
+      ]
+     ]
+    }
+   }
+  },
+  "apiRouteGETchatsEEE47B2A": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "RouteKey": "GET /chats",
+    "AuthorizationType": "NONE",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiRouteGETchatsIntegrationGETchats628E6E31"
+       }
+      ]
+     ]
+    }
+   }
+  },
+  "apiLambdaPOSTchatsServiceRole517F2ED9": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   }
+  },
+  "apiLambdaPOSTchatsServiceRoleDefaultPolicy6A464425": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iot:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "apiLambdaPOSTchatsServiceRoleDefaultPolicy6A464425",
+    "Roles": [
+     {
+      "Ref": "apiLambdaPOSTchatsServiceRole517F2ED9"
+     }
+    ]
+   }
+  },
+  "apiLambdaPOSTchatsC68D5486": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+     "S3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "apiLambdaPOSTchatsServiceRole517F2ED9",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+      "SST_FUNCTION_ID": "c8f44c3348fb68dc3f6b1f0266d276fb8d27c038fc",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+      "SST_APP": "week11",
+      "SST_STAGE": "rgabr",
+      "SST_SSM_PREFIX": "/sst/week11/rgabr/",
+      "SST_DEBUG_IS_API_ROUTE": "1"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "bridge.handler",
+    "MemorySize": 1024,
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "apiLambdaPOSTchatsServiceRoleDefaultPolicy6A464425",
+    "apiLambdaPOSTchatsServiceRole517F2ED9"
+   ]
+  },
+  "apiLambdaPOSTchatsEventInvokeConfig334E6760": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "apiLambdaPOSTchatsC68D5486"
+    },
+    "Qualifier": "$LATEST",
+    "MaximumRetryAttempts": 0
+   }
+  },
+  "apiRoutePOSTchatsIntegrationPOSTchats80E9CB0E": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiLambdaPOSTchatsC68D5486",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   }
+  },
+  "apiRoutePOSTchatsIntegrationPOSTchatsPermissionD59152F2": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiLambdaPOSTchatsC68D5486",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-2:685970848883:",
+       {
+        "Ref": "apiApiC3C473D0"
+       },
+       "/*/*/chats"
+      ]
+     ]
+    }
+   }
+  },
+  "apiRoutePOSTchatsDE5A9D7D": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "RouteKey": "POST /chats",
+    "AuthorizationType": "NONE",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiRoutePOSTchatsIntegrationPOSTchats80E9CB0E"
+       }
+      ]
+     ]
+    }
+   }
+  },
+  "apiLambdaDELETEchatschatIdServiceRole9EBC5C28": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   }
+  },
+  "apiLambdaDELETEchatschatIdServiceRoleDefaultPolicy70DD136F": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iot:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "apiLambdaDELETEchatschatIdServiceRoleDefaultPolicy70DD136F",
+    "Roles": [
+     {
+      "Ref": "apiLambdaDELETEchatschatIdServiceRole9EBC5C28"
+     }
+    ]
+   }
+  },
+  "apiLambdaDELETEchatschatId236219F7": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+     "S3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "apiLambdaDELETEchatschatIdServiceRole9EBC5C28",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+      "SST_FUNCTION_ID": "c850aa15a311c20ea1c194ccc95d9269387e7dc316",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+      "SST_APP": "week11",
+      "SST_STAGE": "rgabr",
+      "SST_SSM_PREFIX": "/sst/week11/rgabr/",
+      "SST_DEBUG_IS_API_ROUTE": "1"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "bridge.handler",
+    "MemorySize": 1024,
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "apiLambdaDELETEchatschatIdServiceRoleDefaultPolicy70DD136F",
+    "apiLambdaDELETEchatschatIdServiceRole9EBC5C28"
+   ]
+  },
+  "apiLambdaDELETEchatschatIdEventInvokeConfig00A9212F": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "apiLambdaDELETEchatschatId236219F7"
+    },
+    "Qualifier": "$LATEST",
+    "MaximumRetryAttempts": 0
+   }
+  },
+  "apiRouteDELETEchatschatIdIntegrationDELETEchatschatId9BFDF073": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiLambdaDELETEchatschatId236219F7",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   }
+  },
+  "apiRouteDELETEchatschatIdIntegrationDELETEchatschatIdPermission61C5833E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiLambdaDELETEchatschatId236219F7",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-2:685970848883:",
+       {
+        "Ref": "apiApiC3C473D0"
+       },
+       "/*/*/chats/{chatId}"
+      ]
+     ]
+    }
+   }
+  },
+  "apiRouteDELETEchatschatId801F8694": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "RouteKey": "DELETE /chats/{chatId}",
+    "AuthorizationType": "NONE",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiRouteDELETEchatschatIdIntegrationDELETEchatschatId9BFDF073"
+       }
+      ]
+     ]
+    }
+   }
+  },
+  "apiLambdaPUTchatschatIdServiceRole18C245E7": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   }
+  },
+  "apiLambdaPUTchatschatIdServiceRoleDefaultPolicyB17DE954": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iot:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "apiLambdaPUTchatschatIdServiceRoleDefaultPolicyB17DE954",
+    "Roles": [
+     {
+      "Ref": "apiLambdaPUTchatschatIdServiceRole18C245E7"
+     }
+    ]
+   }
+  },
+  "apiLambdaPUTchatschatId6AB044D4": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+     "S3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "apiLambdaPUTchatschatIdServiceRole18C245E7",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+      "SST_FUNCTION_ID": "c82f0d20ac548a7aa563cad19b4f7d45ad7293ae23",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+      "SST_APP": "week11",
+      "SST_STAGE": "rgabr",
+      "SST_SSM_PREFIX": "/sst/week11/rgabr/",
+      "SST_DEBUG_IS_API_ROUTE": "1"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "bridge.handler",
+    "MemorySize": 1024,
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "apiLambdaPUTchatschatIdServiceRoleDefaultPolicyB17DE954",
+    "apiLambdaPUTchatschatIdServiceRole18C245E7"
+   ]
+  },
+  "apiLambdaPUTchatschatIdEventInvokeConfigC7E6FA3B": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "apiLambdaPUTchatschatId6AB044D4"
+    },
+    "Qualifier": "$LATEST",
+    "MaximumRetryAttempts": 0
+   }
+  },
+  "apiRoutePUTchatschatIdIntegrationPUTchatschatId874B7628": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiLambdaPUTchatschatId6AB044D4",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   }
+  },
+  "apiRoutePUTchatschatIdIntegrationPUTchatschatIdPermissionFC4B6BF9": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiLambdaPUTchatschatId6AB044D4",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-2:685970848883:",
+       {
+        "Ref": "apiApiC3C473D0"
+       },
+       "/*/*/chats/{chatId}"
+      ]
+     ]
+    }
+   }
+  },
+  "apiRoutePUTchatschatId978778E2": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "RouteKey": "PUT /chats/{chatId}",
+    "AuthorizationType": "NONE",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiRoutePUTchatschatIdIntegrationPUTchatschatId874B7628"
+       }
+      ]
+     ]
+    }
+   }
+  },
+  "apiLambdaGETmessageschatIdServiceRoleF198A9FB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   }
+  },
+  "apiLambdaGETmessageschatIdServiceRoleDefaultPolicy9DE98704": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iot:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "apiLambdaGETmessageschatIdServiceRoleDefaultPolicy9DE98704",
+    "Roles": [
+     {
+      "Ref": "apiLambdaGETmessageschatIdServiceRoleF198A9FB"
+     }
+    ]
+   }
+  },
+  "apiLambdaGETmessageschatId7A8DDAB6": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+     "S3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "apiLambdaGETmessageschatIdServiceRoleF198A9FB",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+      "SST_FUNCTION_ID": "c8faabe5632dcc3f0bdeb73c7abccede6193fb8da1",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+      "SST_APP": "week11",
+      "SST_STAGE": "rgabr",
+      "SST_SSM_PREFIX": "/sst/week11/rgabr/",
+      "SST_DEBUG_IS_API_ROUTE": "1"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "bridge.handler",
+    "MemorySize": 1024,
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "apiLambdaGETmessageschatIdServiceRoleDefaultPolicy9DE98704",
+    "apiLambdaGETmessageschatIdServiceRoleF198A9FB"
+   ]
+  },
+  "apiLambdaGETmessageschatIdEventInvokeConfig8E2E3A27": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "apiLambdaGETmessageschatId7A8DDAB6"
+    },
+    "Qualifier": "$LATEST",
+    "MaximumRetryAttempts": 0
+   }
+  },
+  "apiRouteGETmessageschatIdIntegrationGETmessageschatIdE745DBD6": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiLambdaGETmessageschatId7A8DDAB6",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   }
+  },
+  "apiRouteGETmessageschatIdIntegrationGETmessageschatIdPermission44D790DB": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiLambdaGETmessageschatId7A8DDAB6",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-2:685970848883:",
+       {
+        "Ref": "apiApiC3C473D0"
+       },
+       "/*/*/messages/{chatId}"
+      ]
+     ]
+    }
+   }
+  },
+  "apiRouteGETmessageschatIdD3CB7C83": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "RouteKey": "GET /messages/{chatId}",
+    "AuthorizationType": "NONE",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiRouteGETmessageschatIdIntegrationGETmessageschatIdE745DBD6"
+       }
+      ]
+     ]
+    }
+   }
+  },
+  "apiLambdaPOSTmessagesServiceRole085027C7": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   }
+  },
+  "apiLambdaPOSTmessagesServiceRoleDefaultPolicy597BE47B": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iot:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "apiLambdaPOSTmessagesServiceRoleDefaultPolicy597BE47B",
+    "Roles": [
+     {
+      "Ref": "apiLambdaPOSTmessagesServiceRole085027C7"
+     }
+    ]
+   }
+  },
+  "apiLambdaPOSTmessages6773B633": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+     "S3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "apiLambdaPOSTmessagesServiceRole085027C7",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+      "SST_FUNCTION_ID": "c8ad0f11577881684786a7ab126aa29b4d4064fb22",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+      "SST_APP": "week11",
+      "SST_STAGE": "rgabr",
+      "SST_SSM_PREFIX": "/sst/week11/rgabr/",
+      "SST_DEBUG_IS_API_ROUTE": "1"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "bridge.handler",
+    "MemorySize": 1024,
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "apiLambdaPOSTmessagesServiceRoleDefaultPolicy597BE47B",
+    "apiLambdaPOSTmessagesServiceRole085027C7"
+   ]
+  },
+  "apiLambdaPOSTmessagesEventInvokeConfig27A20C85": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "apiLambdaPOSTmessages6773B633"
+    },
+    "Qualifier": "$LATEST",
+    "MaximumRetryAttempts": 0
+   }
+  },
+  "apiRoutePOSTmessagesIntegrationPOSTmessagesC10DF2DD": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiLambdaPOSTmessages6773B633",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   }
+  },
+  "apiRoutePOSTmessagesIntegrationPOSTmessagesPermissionFAD69B48": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiLambdaPOSTmessages6773B633",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-2:685970848883:",
+       {
+        "Ref": "apiApiC3C473D0"
+       },
+       "/*/*/messages"
+      ]
+     ]
+    }
+   }
+  },
+  "apiRoutePOSTmessages9A04546B": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "RouteKey": "POST /messages",
+    "AuthorizationType": "NONE",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiRoutePOSTmessagesIntegrationPOSTmessagesC10DF2DD"
+       }
+      ]
+     ]
+    }
+   }
+  },
+  "apiLambdaDELETEmessageschatIdmessageIdServiceRoleAD48E5F2": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   }
+  },
+  "apiLambdaDELETEmessageschatIdmessageIdServiceRoleDefaultPolicyD147EB50": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iot:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "apiLambdaDELETEmessageschatIdmessageIdServiceRoleDefaultPolicyD147EB50",
+    "Roles": [
+     {
+      "Ref": "apiLambdaDELETEmessageschatIdmessageIdServiceRoleAD48E5F2"
+     }
+    ]
+   }
+  },
+  "apiLambdaDELETEmessageschatIdmessageIdF27BCB07": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+     "S3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "apiLambdaDELETEmessageschatIdmessageIdServiceRoleAD48E5F2",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+      "SST_FUNCTION_ID": "c87aca89fabaef819cc694942390fd22673e15dab3",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+      "SST_APP": "week11",
+      "SST_STAGE": "rgabr",
+      "SST_SSM_PREFIX": "/sst/week11/rgabr/",
+      "SST_DEBUG_IS_API_ROUTE": "1"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "bridge.handler",
+    "MemorySize": 1024,
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "apiLambdaDELETEmessageschatIdmessageIdServiceRoleDefaultPolicyD147EB50",
+    "apiLambdaDELETEmessageschatIdmessageIdServiceRoleAD48E5F2"
+   ]
+  },
+  "apiLambdaDELETEmessageschatIdmessageIdEventInvokeConfig974962BF": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "apiLambdaDELETEmessageschatIdmessageIdF27BCB07"
+    },
+    "Qualifier": "$LATEST",
+    "MaximumRetryAttempts": 0
+   }
+  },
+  "apiRouteDELETEmessageschatIdmessageIdIntegrationDELETEmessageschatIdmessageIdB2407ECD": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiLambdaDELETEmessageschatIdmessageIdF27BCB07",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   }
+  },
+  "apiRouteDELETEmessageschatIdmessageIdIntegrationDELETEmessageschatIdmessageIdPermission22E17257": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiLambdaDELETEmessageschatIdmessageIdF27BCB07",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-2:685970848883:",
+       {
+        "Ref": "apiApiC3C473D0"
+       },
+       "/*/*/messages/{chatId}/{messageId}"
+      ]
+     ]
+    }
+   }
+  },
+  "apiRouteDELETEmessageschatIdmessageId733713D3": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "RouteKey": "DELETE /messages/{chatId}/{messageId}",
+    "AuthorizationType": "NONE",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiRouteDELETEmessageschatIdmessageIdIntegrationDELETEmessageschatIdmessageIdB2407ECD"
+       }
+      ]
+     ]
+    }
+   }
+  },
+  "apiLambdaPUTmessageschatIdmessageIdServiceRoleE1A9381D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ]
+   }
+  },
+  "apiLambdaPUTmessageschatIdmessageIdServiceRoleDefaultPolicy587BC4B8": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iot:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "apiLambdaPUTmessageschatIdmessageIdServiceRoleDefaultPolicy587BC4B8",
+    "Roles": [
+     {
+      "Ref": "apiLambdaPUTmessageschatIdmessageIdServiceRoleE1A9381D"
+     }
+    ]
+   }
+  },
+  "apiLambdaPUTmessageschatIdmessageId69379E4C": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-685970848883-us-east-2",
+     "S3Key": "a64c186092c9d9420ddff76019c799a523b428935d9f414412208dbbf968de40.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "apiLambdaPUTmessageschatIdmessageIdServiceRoleE1A9381D",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "DATABASE_URL": "postgresql://renz:9FuE5ffUAlAwA6NEzXuZpw@chat-app-6039.6wr.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full",
+      "SST_FUNCTION_ID": "c84dc3e6c68e5d08f7563f1349b46782daa165e5ab",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+      "SST_APP": "week11",
+      "SST_STAGE": "rgabr",
+      "SST_SSM_PREFIX": "/sst/week11/rgabr/",
+      "SST_DEBUG_IS_API_ROUTE": "1"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "bridge.handler",
+    "MemorySize": 1024,
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "week11"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "rgabr"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "apiLambdaPUTmessageschatIdmessageIdServiceRoleDefaultPolicy587BC4B8",
+    "apiLambdaPUTmessageschatIdmessageIdServiceRoleE1A9381D"
+   ]
+  },
+  "apiLambdaPUTmessageschatIdmessageIdEventInvokeConfig6866B040": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "apiLambdaPUTmessageschatIdmessageId69379E4C"
+    },
+    "Qualifier": "$LATEST",
+    "MaximumRetryAttempts": 0
+   }
+  },
+  "apiRoutePUTmessageschatIdmessageIdIntegrationPUTmessageschatIdmessageIdB0ADD0B8": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiLambdaPUTmessageschatIdmessageId69379E4C",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   }
+  },
+  "apiRoutePUTmessageschatIdmessageIdIntegrationPUTmessageschatIdmessageIdPermission2A0022C5": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiLambdaPUTmessageschatIdmessageId69379E4C",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-2:685970848883:",
+       {
+        "Ref": "apiApiC3C473D0"
+       },
+       "/*/*/messages/{chatId}/{messageId}"
+      ]
+     ]
+    }
+   }
+  },
+  "apiRoutePUTmessageschatIdmessageId98E608E8": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "apiApiC3C473D0"
+    },
+    "RouteKey": "PUT /messages/{chatId}/{messageId}",
+    "AuthorizationType": "NONE",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiRoutePUTmessageschatIdmessageIdIntegrationPUTmessageschatIdmessageIdB0ADD0B8"
+       }
+      ]
+     ]
+    }
+   }
+  },
+  "apiParameterurl1D4D90E2": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": {
+     "Fn::GetAtt": [
+      "apiApiC3C473D0",
+      "ApiEndpoint"
+     ]
+    },
+    "Name": "/sst/week11/rgabr/Api/api/url",
+    "Tags": {
+     "sst:app": "week11",
+     "sst:stage": "rgabr"
+    }
+   }
+  }
+ },
+ "Outputs": {
+  "ApiEndpoint": {
+   "Value": {
+    "Fn::GetAtt": [
+     "apiApiC3C473D0",
+     "ApiEndpoint"
+    ]
+   }
+  },
+  "SSTMetadata": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "{\"app\":\"week11\",\"stage\":\"rgabr\",\"version\":\"2.1.32\",\"metadata\":[{\"id\":\"api\",\"addr\":\"c838a9f6facdff9a7708f9b06d942f05e739b45910\",\"stack\":\"rgabr-week11-API\",\"type\":\"Api\",\"data\":{\"graphql\":false,\"url\":\"https://",
+      {
+       "Ref": "apiApiC3C473D0"
+      },
+      ".execute-api.us-east-2.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/\",\"httpApiId\":\"",
+      {
+       "Ref": "apiApiC3C473D0"
+      },
+      "\",\"routes\":[{\"type\":\"function\",\"route\":\"GET /chats\",\"fn\":{\"node\":\"c8b71a55c361a2361526fdf21eaf2d583f528d89d7\",\"stack\":\"rgabr-week11-API\"}},{\"type\":\"function\",\"route\":\"POST /chats\",\"fn\":{\"node\":\"c8f44c3348fb68dc3f6b1f0266d276fb8d27c038fc\",\"stack\":\"rgabr-week11-API\"}},{\"type\":\"function\",\"route\":\"DELETE /chats/{chatId}\",\"fn\":{\"node\":\"c850aa15a311c20ea1c194ccc95d9269387e7dc316\",\"stack\":\"rgabr-week11-API\"}},{\"type\":\"function\",\"route\":\"PUT /chats/{chatId}\",\"fn\":{\"node\":\"c82f0d20ac548a7aa563cad19b4f7d45ad7293ae23\",\"stack\":\"rgabr-week11-API\"}},{\"type\":\"function\",\"route\":\"GET /messages/{chatId}\",\"fn\":{\"node\":\"c8faabe5632dcc3f0bdeb73c7abccede6193fb8da1\",\"stack\":\"rgabr-week11-API\"}},{\"type\":\"function\",\"route\":\"POST /messages\",\"fn\":{\"node\":\"c8ad0f11577881684786a7ab126aa29b4d4064fb22\",\"stack\":\"rgabr-week11-API\"}},{\"type\":\"function\",\"route\":\"DELETE /messages/{chatId}/{messageId}\",\"fn\":{\"node\":\"c87aca89fabaef819cc694942390fd22673e15dab3\",\"stack\":\"rgabr-week11-API\"}},{\"type\":\"function\",\"route\":\"PUT /messages/{chatId}/{messageId}\",\"fn\":{\"node\":\"c84dc3e6c68e5d08f7563f1349b46782daa165e5ab\",\"stack\":\"rgabr-week11-API\"}}]}},{\"id\":\"Lambda_GET_--chats\",\"addr\":\"c8b71a55c361a2361526fdf21eaf2d583f528d89d7\",\"stack\":\"rgabr-week11-API\",\"type\":\"Function\",\"data\":{\"arn\":\"",
+      {
+       "Fn::GetAtt": [
+        "apiLambdaGETchats4742294E",
+        "Arn"
+       ]
+      },
+      "\",\"localId\":\"c8b71a55c361a2361526fdf21eaf2d583f528d89d7\",\"secrets\":[]}},{\"id\":\"Lambda_POST_--chats\",\"addr\":\"c8f44c3348fb68dc3f6b1f0266d276fb8d27c038fc\",\"stack\":\"rgabr-week11-API\",\"type\":\"Function\",\"data\":{\"arn\":\"",
+      {
+       "Fn::GetAtt": [
+        "apiLambdaPOSTchatsC68D5486",
+        "Arn"
+       ]
+      },
+      "\",\"localId\":\"c8f44c3348fb68dc3f6b1f0266d276fb8d27c038fc\",\"secrets\":[]}},{\"id\":\"Lambda_DELETE_--chats--{chatId}\",\"addr\":\"c850aa15a311c20ea1c194ccc95d9269387e7dc316\",\"stack\":\"rgabr-week11-API\",\"type\":\"Function\",\"data\":{\"arn\":\"",
+      {
+       "Fn::GetAtt": [
+        "apiLambdaDELETEchatschatId236219F7",
+        "Arn"
+       ]
+      },
+      "\",\"localId\":\"c850aa15a311c20ea1c194ccc95d9269387e7dc316\",\"secrets\":[]}},{\"id\":\"Lambda_PUT_--chats--{chatId}\",\"addr\":\"c82f0d20ac548a7aa563cad19b4f7d45ad7293ae23\",\"stack\":\"rgabr-week11-API\",\"type\":\"Function\",\"data\":{\"arn\":\"",
+      {
+       "Fn::GetAtt": [
+        "apiLambdaPUTchatschatId6AB044D4",
+        "Arn"
+       ]
+      },
+      "\",\"localId\":\"c82f0d20ac548a7aa563cad19b4f7d45ad7293ae23\",\"secrets\":[]}},{\"id\":\"Lambda_GET_--messages--{chatId}\",\"addr\":\"c8faabe5632dcc3f0bdeb73c7abccede6193fb8da1\",\"stack\":\"rgabr-week11-API\",\"type\":\"Function\",\"data\":{\"arn\":\"",
+      {
+       "Fn::GetAtt": [
+        "apiLambdaGETmessageschatId7A8DDAB6",
+        "Arn"
+       ]
+      },
+      "\",\"localId\":\"c8faabe5632dcc3f0bdeb73c7abccede6193fb8da1\",\"secrets\":[]}},{\"id\":\"Lambda_POST_--messages\",\"addr\":\"c8ad0f11577881684786a7ab126aa29b4d4064fb22\",\"stack\":\"rgabr-week11-API\",\"type\":\"Function\",\"data\":{\"arn\":\"",
+      {
+       "Fn::GetAtt": [
+        "apiLambdaPOSTmessages6773B633",
+        "Arn"
+       ]
+      },
+      "\",\"localId\":\"c8ad0f11577881684786a7ab126aa29b4d4064fb22\",\"secrets\":[]}},{\"id\":\"Lambda_DELETE_--messages--{chatId}--{messageId}\",\"addr\":\"c87aca89fabaef819cc694942390fd22673e15dab3\",\"stack\":\"rgabr-week11-API\",\"type\":\"Function\",\"data\":{\"arn\":\"",
+      {
+       "Fn::GetAtt": [
+        "apiLambdaDELETEmessageschatIdmessageIdF27BCB07",
+        "Arn"
+       ]
+      },
+      "\",\"localId\":\"c87aca89fabaef819cc694942390fd22673e15dab3\",\"secrets\":[]}},{\"id\":\"Lambda_PUT_--messages--{chatId}--{messageId}\",\"addr\":\"c84dc3e6c68e5d08f7563f1349b46782daa165e5ab\",\"stack\":\"rgabr-week11-API\",\"type\":\"Function\",\"data\":{\"arn\":\"",
+      {
+       "Fn::GetAtt": [
+        "apiLambdaPUTmessageschatIdmessageId69379E4C",
+        "Arn"
+       ]
+      },
+      "\",\"localId\":\"c84dc3e6c68e5d08f7563f1349b46782daa165e5ab\",\"secrets\":[]}}]}"
+     ]
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttapiApiC3C473D0ApiEndpointEFEAABD2": {
+   "Value": {
+    "Fn::GetAtt": [
+     "apiApiC3C473D0",
+     "ApiEndpoint"
+    ]
+   },
+   "Export": {
+    "Name": "rgabr-week11-API:ExportsOutputFnGetAttapiApiC3C473D0ApiEndpointEFEAABD2"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

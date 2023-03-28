@@ -1,0 +1,9 @@
+{
+  "prod-week11-API": {
+    "ApiEndpoint": "https://1byaaizpkb.execute-api.us-east-2.amazonaws.com"
+  },
+  "prod-week11-FrontendStack": {
+    "SiteUrl": "https://d2y4d75jnqh5oh.cloudfront.net",
+    "ReactSiteSstSiteEnvVITEAPIURL6F187727": "https://1byaaizpkb.execute-api.us-east-2.amazonaws.com"
+  }
+}

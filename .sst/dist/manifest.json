@@ -1,0 +1,630 @@
+{
+  "version": "29.0.0",
+  "artifacts": {
+    "prod-week11-API.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "prod-week11-API.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "prod-week11-API": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://685970848883/us-east-2",
+      "properties": {
+        "templateFile": "prod-week11-API.template.json",
+        "tags": {
+          "sst:app": "week11",
+          "sst:stage": "prod"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::685970848883:role/cdk-hnb659fds-deploy-role-685970848883-us-east-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::685970848883:role/cdk-hnb659fds-cfn-exec-role-685970848883-us-east-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-685970848883-us-east-2/e3726a688e301c847df276de9360edf44e7e956af2663b7456e3a223a3e5f76f.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "prod-week11-API.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::685970848883:role/cdk-hnb659fds-lookup-role-685970848883-us-east-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "prod-week11-API.assets"
+      ],
+      "metadata": {
+        "/prod-week11-API": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "sst:app",
+                "Value": "week11"
+              },
+              {
+                "Key": "sst:stage",
+                "Value": "prod"
+              }
+            ]
+          }
+        ],
+        "/prod-week11-API/CustomResourceHandler/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomResourceHandlerServiceRole41AEC181"
+          }
+        ],
+        "/prod-week11-API/CustomResourceHandler/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomResourceHandlerE8FB56BA"
+          }
+        ],
+        "/prod-week11-API/api/Api/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiApiC3C473D0"
+          }
+        ],
+        "/prod-week11-API/api/Api/DefaultStage/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiApiDefaultStageA626ED4D"
+          }
+        ],
+        "/prod-week11-API/api/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLogGroup924E5B7A"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_GET_--chats/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaGETchatsServiceRoleAA72D938"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_GET_--chats/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaGETchatsServiceRoleDefaultPolicy9BF29F90"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_GET_--chats/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaGETchats4742294E"
+          }
+        ],
+        "/prod-week11-API/api/Route_GET_--chats/Integration_GET_--chats/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteGETchatsIntegrationGETchats628E6E31"
+          }
+        ],
+        "/prod-week11-API/api/Route_GET_--chats/Integration_GET_--chats-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteGETchatsIntegrationGETchatsPermissionDD83C115"
+          }
+        ],
+        "/prod-week11-API/api/Route_GET_--chats/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteGETchatsEEE47B2A"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_POST_--chats/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPOSTchatsServiceRole517F2ED9"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_POST_--chats/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPOSTchatsServiceRoleDefaultPolicy6A464425"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_POST_--chats/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPOSTchatsC68D5486"
+          }
+        ],
+        "/prod-week11-API/api/Route_POST_--chats/Integration_POST_--chats/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePOSTchatsIntegrationPOSTchats80E9CB0E"
+          }
+        ],
+        "/prod-week11-API/api/Route_POST_--chats/Integration_POST_--chats-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePOSTchatsIntegrationPOSTchatsPermissionD59152F2"
+          }
+        ],
+        "/prod-week11-API/api/Route_POST_--chats/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePOSTchatsDE5A9D7D"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_DELETE_--chats--{chatId}/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaDELETEchatschatIdServiceRole9EBC5C28"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_DELETE_--chats--{chatId}/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaDELETEchatschatIdServiceRoleDefaultPolicy70DD136F"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_DELETE_--chats--{chatId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaDELETEchatschatId236219F7"
+          }
+        ],
+        "/prod-week11-API/api/Route_DELETE_--chats--{chatId}/Integration_DELETE_--chats--{chatId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteDELETEchatschatIdIntegrationDELETEchatschatId9BFDF073"
+          }
+        ],
+        "/prod-week11-API/api/Route_DELETE_--chats--{chatId}/Integration_DELETE_--chats--{chatId}-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteDELETEchatschatIdIntegrationDELETEchatschatIdPermission61C5833E"
+          }
+        ],
+        "/prod-week11-API/api/Route_DELETE_--chats--{chatId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteDELETEchatschatId801F8694"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_PUT_--chats--{chatId}/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPUTchatschatIdServiceRole18C245E7"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_PUT_--chats--{chatId}/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPUTchatschatIdServiceRoleDefaultPolicyB17DE954"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_PUT_--chats--{chatId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPUTchatschatId6AB044D4"
+          }
+        ],
+        "/prod-week11-API/api/Route_PUT_--chats--{chatId}/Integration_PUT_--chats--{chatId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePUTchatschatIdIntegrationPUTchatschatId874B7628"
+          }
+        ],
+        "/prod-week11-API/api/Route_PUT_--chats--{chatId}/Integration_PUT_--chats--{chatId}-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePUTchatschatIdIntegrationPUTchatschatIdPermissionFC4B6BF9"
+          }
+        ],
+        "/prod-week11-API/api/Route_PUT_--chats--{chatId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePUTchatschatId978778E2"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_GET_--messages--{chatId}/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaGETmessageschatIdServiceRoleF198A9FB"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_GET_--messages--{chatId}/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaGETmessageschatIdServiceRoleDefaultPolicy9DE98704"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_GET_--messages--{chatId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaGETmessageschatId7A8DDAB6"
+          }
+        ],
+        "/prod-week11-API/api/Route_GET_--messages--{chatId}/Integration_GET_--messages--{chatId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteGETmessageschatIdIntegrationGETmessageschatIdE745DBD6"
+          }
+        ],
+        "/prod-week11-API/api/Route_GET_--messages--{chatId}/Integration_GET_--messages--{chatId}-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteGETmessageschatIdIntegrationGETmessageschatIdPermission44D790DB"
+          }
+        ],
+        "/prod-week11-API/api/Route_GET_--messages--{chatId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteGETmessageschatIdD3CB7C83"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_POST_--messages/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPOSTmessagesServiceRole085027C7"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_POST_--messages/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPOSTmessagesServiceRoleDefaultPolicy597BE47B"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_POST_--messages/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPOSTmessages6773B633"
+          }
+        ],
+        "/prod-week11-API/api/Route_POST_--messages/Integration_POST_--messages/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePOSTmessagesIntegrationPOSTmessagesC10DF2DD"
+          }
+        ],
+        "/prod-week11-API/api/Route_POST_--messages/Integration_POST_--messages-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePOSTmessagesIntegrationPOSTmessagesPermissionFAD69B48"
+          }
+        ],
+        "/prod-week11-API/api/Route_POST_--messages/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePOSTmessages9A04546B"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaDELETEmessageschatIdmessageIdServiceRoleAD48E5F2"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaDELETEmessageschatIdmessageIdServiceRoleDefaultPolicyD147EB50"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_DELETE_--messages--{chatId}--{messageId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaDELETEmessageschatIdmessageIdF27BCB07"
+          }
+        ],
+        "/prod-week11-API/api/Route_DELETE_--messages--{chatId}--{messageId}/Integration_DELETE_--messages--{chatId}--{messageId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteDELETEmessageschatIdmessageIdIntegrationDELETEmessageschatIdmessageIdB2407ECD"
+          }
+        ],
+        "/prod-week11-API/api/Route_DELETE_--messages--{chatId}--{messageId}/Integration_DELETE_--messages--{chatId}--{messageId}-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteDELETEmessageschatIdmessageIdIntegrationDELETEmessageschatIdmessageIdPermission22E17257"
+          }
+        ],
+        "/prod-week11-API/api/Route_DELETE_--messages--{chatId}--{messageId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRouteDELETEmessageschatIdmessageId733713D3"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPUTmessageschatIdmessageIdServiceRoleE1A9381D"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPUTmessageschatIdmessageIdServiceRoleDefaultPolicy587BC4B8"
+          }
+        ],
+        "/prod-week11-API/api/Lambda_PUT_--messages--{chatId}--{messageId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiLambdaPUTmessageschatIdmessageId69379E4C"
+          }
+        ],
+        "/prod-week11-API/api/Route_PUT_--messages--{chatId}--{messageId}/Integration_PUT_--messages--{chatId}--{messageId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePUTmessageschatIdmessageIdIntegrationPUTmessageschatIdmessageIdB0ADD0B8"
+          }
+        ],
+        "/prod-week11-API/api/Route_PUT_--messages--{chatId}--{messageId}/Integration_PUT_--messages--{chatId}--{messageId}-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePUTmessageschatIdmessageIdIntegrationPUTmessageschatIdmessageIdPermission2A0022C5"
+          }
+        ],
+        "/prod-week11-API/api/Route_PUT_--messages--{chatId}--{messageId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiRoutePUTmessageschatIdmessageId98E608E8"
+          }
+        ],
+        "/prod-week11-API/api/Parameter_url/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiParameterurl1D4D90E2"
+          }
+        ],
+        "/prod-week11-API/SSTStackOutputApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiEndpoint"
+          }
+        ],
+        "/prod-week11-API/SSTStackOutputSSTMetadata": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SSTMetadata"
+          }
+        ],
+        "/prod-week11-API/Exports/Output{\"Fn::GetAtt\":[\"apiApiC3C473D0\",\"ApiEndpoint\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttapiApiC3C473D0ApiEndpointEFEAABD2"
+          }
+        ],
+        "/prod-week11-API/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/prod-week11-API/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "prod-week11-API"
+    },
+    "prod-week11-FrontendStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "prod-week11-FrontendStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "prod-week11-FrontendStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://685970848883/us-east-2",
+      "properties": {
+        "templateFile": "prod-week11-FrontendStack.template.json",
+        "tags": {
+          "sst:app": "week11",
+          "sst:stage": "prod"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::685970848883:role/cdk-hnb659fds-deploy-role-685970848883-us-east-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::685970848883:role/cdk-hnb659fds-cfn-exec-role-685970848883-us-east-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-685970848883-us-east-2/ac20a14890fb6b4bf0439db192afb2c7c2311051683aa443e1ebcb3bd13bb1d1.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "prod-week11-FrontendStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::685970848883:role/cdk-hnb659fds-lookup-role-685970848883-us-east-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "prod-week11-API",
+        "prod-week11-FrontendStack.assets"
+      ],
+      "metadata": {
+        "/prod-week11-FrontendStack": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "sst:app",
+                "Value": "week11"
+              },
+              {
+                "Key": "sst:stage",
+                "Value": "prod"
+              }
+            ]
+          }
+        ],
+        "/prod-week11-FrontendStack/CustomResourceHandler/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomResourceHandlerServiceRole41AEC181"
+          }
+        ],
+        "/prod-week11-FrontendStack/CustomResourceHandler/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomResourceHandlerE8FB56BA"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/SstSiteEnv_VITE_API_URL": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteSstSiteEnvVITEAPIURL6F187727"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteAwsCliLayer032ED8F7"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3BucketB9BB7C04"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Bucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3BucketPolicyD88B458D"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Bucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3BucketAutoDeleteObjectsCustomResource20A5650F"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Uploader/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3UploaderServiceRoleEA10A23A"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Uploader/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3UploaderServiceRoleDefaultPolicy2FE62292"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Uploader/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3Uploader4099484B"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Handler/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3HandlerServiceRoleB1C8F614"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Handler/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3HandlerServiceRoleDefaultPolicy50C54561"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Handler/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3HandlerE190AB4B"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/S3Deployment/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteS3Deployment8044D733"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/CloudFrontFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteCloudFrontFunction7BB49AAD"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/Distribution/Origin1/S3Origin/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteDistributionOrigin1S3OriginE341B3F7"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/Distribution/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteDistributionFFB1766B"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/CloudFrontInvalidatorPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteCloudFrontInvalidatorPolicy9A2C567A"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/CloudFrontInvalidator/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteCloudFrontInvalidatorBA77902C"
+          }
+        ],
+        "/prod-week11-FrontendStack/ReactSite/Parameter_url/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReactSiteParameterurl8CDE53DD"
+          }
+        ],
+        "/prod-week11-FrontendStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/prod-week11-FrontendStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/prod-week11-FrontendStack/SSTStackOutputSiteUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SiteUrl"
+          }
+        ],
+        "/prod-week11-FrontendStack/SSTStackOutputSSTMetadata": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SSTMetadata"
+          }
+        ],
+        "/prod-week11-FrontendStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/prod-week11-FrontendStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "prod-week11-FrontendStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
